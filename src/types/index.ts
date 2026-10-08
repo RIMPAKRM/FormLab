@@ -36,6 +36,16 @@ export interface Survey {
   updatedAt: string
 }
 
+export interface AuthUser {
+  id: number
+  email: string
+}
+
+export interface Credentials {
+  email: string
+  password: string
+}
+
 export type AnswerValue = string | string[] | number | null
 
 export interface SurveyResponse {

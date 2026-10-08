@@ -1,34 +1,37 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { AuthUser, Credentials } from '../../types'
 
-export interface AuthUser {
-  id: number
-  email: string
+interface StoredUser extends AuthUser {
+  password: string
 }
 
 interface AuthState {
+  users: StoredUser[]
   user: AuthUser | null
-  token: string | null
 }
 
 const initialState: AuthState = {
+  users: [],
   user: null,
-  token: null,
 }
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials(state, action: PayloadAction<{ user: AuthUser; token: string }>) {
-      state.user = action.payload.user
-      state.token = action.payload.token
+    register(state, action: PayloadAction<Credentials>) {
+      const user: StoredUser = { id: Date.now(), ...action.payload }
+      ;(state.users ??= []).push(user)
+      state.user = { id: user.id, email: user.email }
+    },
+    setCredentials(state, action: PayloadAction<AuthUser>) {
+      state.user = action.payload
     },
     logout(state) {
       state.user = null
-      state.token = null
     },
   },
 })
 
-export const { setCredentials, logout } = authSlice.actions
+export const { register, setCredentials, logout } = authSlice.actions
 export default authSlice.reducer

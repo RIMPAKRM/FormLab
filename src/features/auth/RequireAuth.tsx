@@ -2,10 +2,10 @@ import { Navigate, Outlet, useLocation } from 'react-router'
 import { useAppSelector } from '../../app/hooks'
 
 export function RequireAuth() {
-  const token = useAppSelector((state) => state.auth.token)
+  const user = useAppSelector((state) => state.auth.user)
   const location = useLocation()
 
-  if (!token) {
+  if (!user) {
     return <Navigate to="/login" replace state={{ from: location }} />
   }
 

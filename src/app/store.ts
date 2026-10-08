@@ -11,20 +11,16 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import authReducer from '../features/auth/authSlice'
-import { api } from '../services/api'
-
-const rootReducer = combineReducers({
-  auth: authReducer,
-  [api.reducerPath]: api.reducer,
-})
+import responsesReducer from '../features/responses/responsesSlice'
+import surveysReducer from '../features/surveys/surveysSlice'
 
 const persistedReducer = persistReducer(
-  {
-    key: 'root',
-    storage,
-    blacklist: [api.reducerPath],
-  },
-  rootReducer,
+  { key: 'root', storage },
+  combineReducers({
+    auth: authReducer,
+    surveys: surveysReducer,
+    responses: responsesReducer,
+  }),
 )
 
 export const store = configureStore({
@@ -34,7 +30,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware),
+    }),
 })
 
 export const persistor = persistStore(store)

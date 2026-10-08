@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+body {
+  @apply bg-neutral-900 text-neutral-100;
+}
+
+input,
+textarea,
+select {
+  @apply rounded border border-violet-500/40 bg-neutral-800 text-neutral-100;
+}
+
+.card {
+  @apply rounded border border-violet-500/30 bg-gradient-to-br from-violet-700/30 to-fuchsia-700/10;
+}
+
+.btn {
+  @apply rounded bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2 text-white hover:from-violet-700 hover:to-fuchsia-700 cursor-pointer;
+}
